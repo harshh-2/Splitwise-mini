@@ -1,83 +1,66 @@
-README.md:
+# Splitwise Mini Project
 
-# Splitwise Clone - Java Swing + MySQL
+A simplified version of the popular **Splitwise** application built in **Java** using **Swing** for the GUI and **JDBC** for MySQL database connectivity.
 
-A desktop application built in **Java** using **Swing** for GUI and **MySQL** as the backend database, inspired by the popular expense-sharing app Splitwise. Manage group expenses, track balances, and calculate settlements easily.
+---
 
 ## Features
 
-- Add, view, and delete members
-- Add, view, and delete expenses with multiple participants
-- Automatic calculation of each member’s balance
-- Settlements showing who owes whom
-- Simple and interactive GUI with Java Swing
-- MySQL database backend with proper foreign key constraints
+- Add members and expenses.
+- Track individual and group expenses.
+- Calculate balances for each member.
+- User-friendly **Swing GUI** interface.
+- Stores data in a **MySQL database**.
 
-## Screenshots
+---
 
-![Members Tab](<img width="1321" height="881" alt="image" src="https://github.com/user-attachments/assets/e8a0a654-34a1-4203-b4c9-14a0d228c380" />
-)  
-![Expenses Tab](<img width="1308" height="891" alt="image" src="https://github.com/user-attachments/assets/a056bee9-735c-478b-8d86-439ded66d568" />
-)  
-![Balances Tab](<img width="1358" height="891" alt="image" src="https://github.com/user-attachments/assets/d49808e2-280b-4e45-a685-a2c3d8138736" />
-)
+## Technologies Used
 
-## Prerequisites
+- **Java SE** (JDK 17+ recommended)
+- **Swing** for GUI
+- **JDBC** for database connectivity
+- **MySQL** for backend database
 
-- Java JDK 8 or above
-- MySQL Server
-- MySQL JDBC Driver (Connector/J)
+---
 
-## Database Setup
+## Setup Instructions
 
-1. Create the database:
+1. **Clone the repository**
+```bash
+git clone https://github.com/harshh-2/Splitwise-mini.git
+cd Splitwise-mini
+Install Java and MySQL
 
-```sql
-CREATE DATABASE splitwise_db;
+Java JDK 17+ recommended.
 
+MySQL Server installed and running.
 
-The application will automatically create the following tables if they do not exist:
+Add MySQL Connector
 
-members
+Place mysql-connector-java-X.X.X.jar in the lib folder.
 
-expenses
+Update the classpath when compiling/running:
 
-expense_shares
+powershell
+Copy code
+# Compile
+javac -cp ".;lib\mysql-connector-java-9.3.0.jar" Splitwise.java
 
-Make sure to update the DatabaseManager credentials in the code:
+# Run
+java -cp ".;lib\mysql-connector-java-9.3.0.jar" Splitwise
+Configure Database
 
-private static final String USER = "root";
-private static final String PASSWORD = "your_mysql_password";
+Create a MySQL database (e.g., splitwise_db).
 
-How to Run
+Update DB credentials in Splitwise.java:
 
-Clone the repository:
+java
+Copy code
+Connection con = DriverManager.getConnection(
+    "jdbc:mysql://localhost:3306/splitwise_db", "root", "your_password");
+Usage
+Launch the application → GUI window opens.
 
-git clone https://github.com/yourusername/Splitwise-Java.git
-cd Splitwise-Java
+Add members and expenses via the interface.
 
-
-Compile the code:
-
-javac Splitwise.java
-
-
-Run the application:
-
-java Splitwise
-
-Project Structure
-Splitwise-Java/
-│
-├─ Splitwise.java         # Main GUI and app logic
-└─ README.md
-
-Future Enhancements
-
-Export balances to CSV or PDF
-
-Email notifications for settlements
-
-Advanced reporting for groups
-
-Mobile version using JavaFX or Kotlin
+View balances and settle debts.
