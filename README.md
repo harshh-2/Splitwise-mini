@@ -70,12 +70,6 @@ Project Structure
 Splitwise-Java/
 │
 ├─ Splitwise.java         # Main GUI and app logic
-├─ DatabaseManager.java   # Database connection and initialization
-├─ Member.java            # Member model
-├─ Expense.java           # Expense model
-├─ MemberDAO.java         # CRUD operations for members
-├─ ExpenseDAO.java        # CRUD operations for expenses
-├─ BalanceCalculator.java # Balance & settlement calculations
 └─ README.md
 
 Future Enhancements
