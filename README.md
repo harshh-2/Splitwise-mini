@@ -2,8 +2,6 @@
 
 A simplified version of the popular **Splitwise** application built in **Java** using **Swing** for the GUI and **JDBC** for MySQL database connectivity.
 
----
-
 ## Features
 
 - Add members and expenses.
@@ -12,8 +10,6 @@ A simplified version of the popular **Splitwise** application built in **Java** 
 - User-friendly **Swing GUI** interface.
 - Stores data in a **MySQL database**.
 
----
-
 ## Technologies Used
 
 - **Java SE** (JDK 17+ recommended)
@@ -21,7 +17,6 @@ A simplified version of the popular **Splitwise** application built in **Java** 
 - **JDBC** for database connectivity
 - **MySQL** for backend database
 
----
 
 ## Setup Instructions
 
@@ -42,7 +37,6 @@ Place mysql-connector-java-X.X.X.jar in the lib folder.
 Update the classpath when compiling/running:
 
 powershell
-Copy code
 # Compile
 javac -cp ".;lib\mysql-connector-java-9.3.0.jar" Splitwise.java
 
@@ -55,7 +49,6 @@ Create a MySQL database (e.g., splitwise_db).
 Update DB credentials in Splitwise.java:
 
 java
-Copy code
 Connection con = DriverManager.getConnection(
     "jdbc:mysql://localhost:3306/splitwise_db", "root", "your_password");
 Usage
