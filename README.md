@@ -12,7 +12,7 @@ A simplified version of the popular **Splitwise** application built in **Java** 
 
 ## Technologies Used
 
-- **Java SE** (JDK 17+ recommended)
+- **Java SE** 
 - **Swing** for GUI
 - **JDBC** for database connectivity
 - **MySQL** for backend database
