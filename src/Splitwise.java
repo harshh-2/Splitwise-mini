@@ -189,25 +189,44 @@ public class Splitwise extends JFrame {
             }
         }catch(Exception e){ e.printStackTrace();}
     }
-
-    // --- Balances ---
-    private void refreshBalances(){
+//Balances
+  private void refreshBalances(){
         balanceArea.setText("");
-        try(Connection conn=getConn()){
-            Map<String,BigDecimal> balances=new HashMap<>();
-            try(Statement stmt=conn.createStatement(); ResultSet rs=stmt.executeQuery("SELECT m.name,SUM(e.amount) AS paid FROM expenses e JOIN members m ON e.payer_id=m.id GROUP BY m.id")){
-                while(rs.next()) balances.put(rs.getString("name"),rs.getBigDecimal("paid"));
+        try(Connection conn = getConn()){
+            // Step 1: Load all members
+            Map<Integer, String> members = new HashMap<>();
+            try(Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery("SELECT id,name FROM members")){
+                while(rs.next()) members.put(rs.getInt("id"), rs.getString("name"));
             }
-            try(Statement stmt=conn.createStatement(); ResultSet rs=stmt.executeQuery("SELECT m.name,SUM(es.share) AS owes FROM expense_shares es JOIN members m ON es.member_id=m.id GROUP BY m.id")){
+
+            // Step 2: Load all expenses with shares
+            Map<Integer, Map<Integer, BigDecimal>> owes = new HashMap<>();
+            try(Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(
+                "SELECT expense_id, member_id, share, payer_id FROM expense_shares es JOIN expenses e ON es.expense_id = e.id")){
                 while(rs.next()){
-                    String n=rs.getString("name"); BigDecimal owe=rs.getBigDecimal("owes");
-                    balances.put(n, balances.getOrDefault(n,BigDecimal.ZERO).subtract(owe));
+                    int memberId = rs.getInt("member_id");
+                    int payerId = rs.getInt("payer_id");
+                    BigDecimal share = rs.getBigDecimal("share");
+
+                    if(memberId == payerId) continue; // skip payer's own share
+
+                    owes.putIfAbsent(memberId, new HashMap<>());
+                    Map<Integer, BigDecimal> inner = owes.get(memberId);
+                    inner.put(payerId, inner.getOrDefault(payerId, BigDecimal.ZERO).add(share));
                 }
             }
-            for(Map.Entry<String,BigDecimal> e: balances.entrySet()) balanceArea.append(e.getKey()+" : "+e.getValue()+"\n");
-        }catch(Exception e){ e.printStackTrace();}
-    }
 
+            // Step 3: Display who owes whom
+            for(Map.Entry<Integer, Map<Integer, BigDecimal>> e : owes.entrySet()){
+                String memberName = members.get(e.getKey());
+                for(Map.Entry<Integer, BigDecimal> payee : e.getValue().entrySet()){
+                    String payeeName = members.get(payee.getKey());
+                    balanceArea.append(memberName + " owes " + payeeName + " : ₹" + payee.getValue() + "\n");
+                }
+            }
+
+        } catch(Exception e){ e.printStackTrace(); }
+    }
     // --- Main ---
     public static void main(String[] args){
         initDB();
