@@ -51,6 +51,7 @@ Update DB credentials in Splitwise.java:
 java
 Connection con = DriverManager.getConnection(
     "jdbc:mysql://localhost:3306/splitwise_db", "root", "your_password");
+
 Usage
 Launch the application → GUI window opens.
 
