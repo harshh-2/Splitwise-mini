@@ -3,7 +3,6 @@
 A simplified version of the popular **Splitwise** application built in **Java** using **Swing** for the GUI and **JDBC** for MySQL database connectivity.
 
 ## Features
-
 - Add members and expenses.
 - Track individual and group expenses.
 - Calculate balances for each member.
